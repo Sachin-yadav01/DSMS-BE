@@ -1,0 +1,29 @@
+spring:
+  session:
+    jdbc:
+      initialize-schema: never
+  servlet:
+    session:
+      cookie:
+        secure: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  mail:
+    host: localhost
+    port: 3025
+
+dsms:
+  cookie:
+    secure: false
+  mail:
+    enabled: false
+  storage:
+    directory: ${java.io.tmpdir}/dsms-test-attachments
+  bootstrap:
+    admin:
+      email: admin@dsms.test
+      password: TestAdminPass123!
+      name: Test Admin
+  demo-mode: false
+  require-secrets: false

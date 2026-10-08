@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: dsms-backend
+  threads:
+    virtual:
+      enabled: true
+  jackson:
+    datatype:
+      datetime:
+        write-dates-as-timestamps: false
+    time-zone: UTC
+  datasource:
+    url: ${DSMS_DB_URL:jdbc:mysql://localhost:3306/dsms_db?characterEncoding=utf8&connectionTimeZone=UTC}
+    username: ${DSMS_DB_USER:dsms}
+    password: ${DSMS_DB_PASSWORD:dsms_dev_password}
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  session:
+    jdbc:
+      initialize-schema: never
+      table-name: SPRING_SESSION
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        name: DSMSSESSION
+        http-only: true
+        same-site: lax
+        secure: ${DSMS_COOKIE_SECURE:false}
+  mail:
+    host: ${DSMS_SMTP_HOST:localhost}
+    port: ${DSMS_SMTP_PORT:1025}
+    username: ${DSMS_SMTP_USERNAME:}
+    password: ${DSMS_SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${DSMS_SMTP_AUTH:false}
+          starttls:
+            enable: ${DSMS_SMTP_STARTTLS:false}
+
+server:
+  port: ${DSMS_SERVER_PORT:8080}
+  error:
+    include-stacktrace: never
+    include-message: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+  info:
+    env:
+      enabled: false
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: ${DSMS_SWAGGER_ENABLED:false}
+    path: /swagger-ui.html
+
+dsms:
+  timezone: ${DSMS_BUSINESS_TIMEZONE:Asia/Kolkata}
+  currency: ${DSMS_CURRENCY:INR}
+  cookie:
+    secure: ${DSMS_COOKIE_SECURE:false}
+  storage:
+    directory: ${DSMS_STORAGE_DIR:./data/attachments}
+    max-file-bytes: 10485760
+  mail:
+    enabled: ${DSMS_MAIL_ENABLED:false}
+    from: ${DSMS_MAIL_FROM:dsms@localhost}
+  bootstrap:
+    admin:
+      email: ${DSMS_BOOTSTRAP_ADMIN_EMAIL:}
+      password: ${DSMS_BOOTSTRAP_ADMIN_PASSWORD:}
+      name: ${DSMS_BOOTSTRAP_ADMIN_NAME:DSMS Admin}
+  security:
+    auth-rate-limit-window-minutes: 15
+    auth-rate-limit-max-failures: 10
+    reset-token-hours: 2
+    invitation-days: 7
+  long-session-hours: 4
+  review-reminder-hours: 24
+  require-secrets: false
+  demo-mode: false
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-}]"

@@ -1,0 +1,15 @@
+spring:
+  servlet:
+    session:
+      cookie:
+        secure: true
+
+springdoc:
+  swagger-ui:
+    enabled: false
+
+dsms:
+  cookie:
+    secure: true
+  demo-mode: false
+  require-secrets: true

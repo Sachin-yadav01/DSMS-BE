@@ -1,0 +1,22 @@
+spring:
+  servlet:
+    session:
+      cookie:
+        secure: false
+
+springdoc:
+  swagger-ui:
+    enabled: true
+
+dsms:
+  cookie:
+    secure: false
+  mail:
+    enabled: true
+  bootstrap:
+    admin:
+      email: ${DSMS_BOOTSTRAP_ADMIN_EMAIL:admin@dsms.local}
+      password: ${DSMS_BOOTSTRAP_ADMIN_PASSWORD:ChangeMe_Admin_123!}
+      name: System Admin
+  demo-mode: true
+  require-secrets: false
