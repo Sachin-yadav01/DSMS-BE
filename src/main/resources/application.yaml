@@ -11,8 +11,8 @@ spring:
     time-zone: UTC
   datasource:
     url: ${DSMS_DB_URL:jdbc:mysql://localhost:3306/dsms_db?characterEncoding=utf8&connectionTimeZone=UTC}
-    username: ${DSMS_DB_USER:dsms}
-    password: ${DSMS_DB_PASSWORD:dsms_dev_password}
+    username: ${DSMS_DB_USER:root}
+    password: ${DSMS_DB_PASSWORD:root}
     hikari:
       maximum-pool-size: 20
   jpa:

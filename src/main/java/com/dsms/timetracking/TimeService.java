@@ -289,11 +289,13 @@ public class TimeService {
         entries.save(entry);
         int seconds = 0;
         Instant previousEnd = null;
+        ZoneId businessZone = ZoneId.of(properties.getTimezone());
+        Instant endOfToday = LocalDate.now(clock.withZone(businessZone)).plusDays(1).atStartOfDay(businessZone).toInstant();
         for (IntervalDto interval : sorted) {
             Instant start = Instant.parse(interval.startedOn());
             Instant end = Instant.parse(interval.endedOn());
-            if (!end.isAfter(start) || end.isAfter(clock.instant())) {
-                throw Exceptions.badRequest("INVALID_INTERVAL", "Intervals cannot be empty, negative, or in the future");
+            if (!end.isAfter(start) || end.isAfter(endOfToday)) {
+                throw Exceptions.badRequest("INVALID_INTERVAL", "Intervals cannot be empty, negative, or after today");
             }
             if (previousEnd != null && start.isBefore(previousEnd)) {
                 throw Exceptions.conflict("INTERVAL_OVERLAP", "Manual intervals overlap");
